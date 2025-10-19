@@ -1,0 +1,56 @@
+name: Vercel Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  preview:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: npm i -g vercel@latest
+      - name: Pull Vercel Env (preview)
+        run: vercel pull --yes --environment=preview --token ${{ secrets.VERCEL_TOKEN }} --cwd influencerstudio/apps/web
+      - name: Build (preview)
+        run: vercel build --token ${{ secrets.VERCEL_TOKEN }} --cwd influencerstudio/apps/web
+      - name: Deploy (preview)
+        run: vercel deploy --prebuilt --token ${{ secrets.VERCEL_TOKEN }} --cwd influencerstudio/apps/web
+
+  production:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: npm i -g vercel@latest
+      - name: Pull Vercel Env (production)
+        run: vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }} --cwd influencerstudio/apps/web
+      - name: Build (production)
+        run: vercel build --prod --token ${{ secrets.VERCEL_TOKEN }} --cwd influencerstudio/apps/web
+      - name: Deploy (production)
+        run: vercel deploy --prebuilt --prod --token ${{ secrets.VERCEL_TOKEN }} --cwd influencerstudio/apps/web
+
