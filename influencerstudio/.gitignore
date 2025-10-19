@@ -1,0 +1,16 @@
+node_modules
+.pnpm-store
+.next
+out
+dist
+build
+.env
+.env.local
+.convex
+.playwright-report
+coverage
+.DS_Store
+.idea
+*.log
+pnpm-debug.log
+turbo

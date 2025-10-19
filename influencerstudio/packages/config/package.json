@@ -1,0 +1,14 @@
+{
+  "name": "@influencerstudio/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./eslint.react.cjs": "./eslint.react.cjs",
+    "./openapi/influencerstudio.json": "./openapi/influencerstudio.json"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}
