@@ -3,30 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  /* Light theme */
+  --background: 210 20% 99%;
+  --foreground: 224 14% 11%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
+  --card-foreground: 224 14% 11%;
+  --muted: 220 16% 96%;
+  --muted-foreground: 220 10% 46%;
+  --border: 220 14% 90%;
+  --input: 220 14% 90%;
 }
 
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
+  /* StoryStudio-inspired night theme */
+  --background: 221 39% 9%;   /* deep navy */
+  --foreground: 210 40% 98%;
+  --card: 221 33% 12%;        /* slate/navy card */
+  --card-foreground: 210 40% 98%;
+  --muted: 220 24% 16%;        /* sidebar/stripes */
+  --muted-foreground: 220 12% 70%;
+  --border: 220 22% 20%;
+  --input: 220 22% 20%;
 }
 
 body {
-  @apply bg-background text-foreground min-h-screen;
+  @apply bg-background text-foreground min-h-screen antialiased;
   font-family: 'Inter', sans-serif;
+  /* subtle radial overlays to echo the screenshot */
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(108,71,255,0.12), transparent 60%),
+    radial-gradient(900px 500px at 60% 120%, rgba(239,68,68,0.08), transparent 60%);
+  background-attachment: fixed;
 }
 
 @layer base {

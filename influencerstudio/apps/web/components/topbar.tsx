@@ -7,7 +7,7 @@ import { Command, Search, Bell, Sun, Moon } from 'lucide-react';
 
 export function Topbar() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() =>
-    (typeof window !== 'undefined' && (localStorage.getItem('theme') as 'light' | 'dark')) || 'light'
+    (typeof window !== 'undefined' && (localStorage.getItem('theme') as 'light' | 'dark')) || 'dark'
   );
 
   useEffect(() => {
@@ -45,4 +45,3 @@ export function Topbar() {
     </div>
   );
 }
-
