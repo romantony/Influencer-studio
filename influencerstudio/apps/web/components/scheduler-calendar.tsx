@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { Calendar } from 'react-day-picker';
+import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from '@influencerstudio/ui';
 
@@ -17,7 +17,7 @@ export function SchedulerCalendar({ scheduledDates }: SchedulerCalendarProps) {
         <CardTitle>Content calendar</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Calendar mode="multiple" selected={selected} disabled />
+        <DayPicker mode="multiple" selected={selected} disabled />
         <ul className="space-y-2 text-sm text-muted-foreground">
           {selected.map((date) => (
             <li key={date.toISOString()}>{format(date, 'PPPpp')}</li>
