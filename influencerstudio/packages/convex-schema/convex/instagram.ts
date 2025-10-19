@@ -1,4 +1,4 @@
-import { mutation, query, type MutationCtx } from 'convex/server';
+import { mutation, query, type MutationCtx } from './_compat';
 import { v, type Id } from 'convex/values';
 import { requireUserWithRole } from './auth';
 

@@ -1,4 +1,4 @@
-import { mutation, query } from 'convex/server';
+import { mutation, query } from './_compat';
 import { v } from 'convex/values';
 import { z } from 'zod';
 import { requireUserWithRole, assertOwnerOrAdmin } from './auth';

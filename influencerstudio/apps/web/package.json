@@ -10,8 +10,7 @@
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@convex-dev/convex": "^1.13.0",
-    "@convex-dev/react": "^1.13.0",
+    
     "@hookform/resolvers": "^3.3.4",
     "@influencerstudio/convex-schema": "workspace:*",
     "@influencerstudio/sdk": "workspace:*",

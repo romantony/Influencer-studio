@@ -1,4 +1,4 @@
-import { query } from 'convex/server';
+import { query } from './_compat';
 import { v } from 'convex/values';
 import { requireUserWithRole } from './auth';
 

@@ -1,10 +1,9 @@
 import { AuthConfig } from 'convex/server';
 
-const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? 'story-factory-4bbdf';
-
-if (!projectId) {
-  throw new Error('Missing Firebase project id for Convex auth configuration.');
-}
+// NOTE: If you want to drive this from Convex env vars,
+// re-introduce process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID and
+// ensure it is set in the deployment.
+const projectId = 'story-factory-4bbdf';
 
 const config: AuthConfig = {
   providers: [

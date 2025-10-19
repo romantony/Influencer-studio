@@ -1,7 +1,7 @@
-import { mutation, query } from 'convex/server';
+import { mutation, query } from './_compat';
 import { v } from 'convex/values';
 import { z } from 'zod';
-import { getImageAdapter } from '@influencerstudio/sdk';
+import { getImageAdapter } from '@influencerstudio/sdk/src/adapters/image';
 import { requireUserWithRole, assertOwnerOrAdmin } from './auth';
 
 const createFromTextSchema = z.object({

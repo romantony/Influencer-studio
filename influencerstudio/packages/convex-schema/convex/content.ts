@@ -1,6 +1,8 @@
-import { mutation } from 'convex/server';
+import { mutation } from './_compat';
 import { v } from 'convex/values';
-import { getImageAdapter, getTTSAdapter, getVideoAdapter } from '@influencerstudio/sdk';
+import { getImageAdapter } from '@influencerstudio/sdk/src/adapters/image';
+import { getTTSAdapter } from '@influencerstudio/sdk/src/adapters/tts';
+import { getVideoAdapter } from '@influencerstudio/sdk/src/adapters/video';
 import { requireUserWithRole } from './auth';
 
 export const generatePhotoSet = mutation({

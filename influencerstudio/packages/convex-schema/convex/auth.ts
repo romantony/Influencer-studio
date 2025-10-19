@@ -1,4 +1,4 @@
-import { query, mutation, type GenericQueryCtx, type GenericMutationCtx, type Doc } from 'convex/server';
+import { query, mutation, type GenericQueryCtx, type GenericMutationCtx, type Doc } from './_compat';
 import { v, type Id } from 'convex/values';
 
 export type Role = 'admin' | 'creator' | 'viewer';

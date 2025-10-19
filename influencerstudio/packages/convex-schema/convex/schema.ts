@@ -90,3 +90,4 @@ export const schema = defineSchema({
 });
 
 export type Schema = typeof schema;
+export default schema;

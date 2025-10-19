@@ -1,8 +1,8 @@
-import { mutation, query } from 'convex/server';
+import { mutation, query } from './_compat';
 import { v } from 'convex/values';
-import { getLLMAdapter } from '@influencerstudio/sdk';
+import { getLLMAdapter } from '@influencerstudio/sdk/src/adapters/llm';
 import { requireUserWithRole, assertOwnerOrAdmin } from './auth';
-import { CaptionResultSchema } from '@influencerstudio/sdk';
+import { CaptionResultSchema } from '@influencerstudio/sdk/src/adapters/llm';
 
 export const list = query({
   args: {},

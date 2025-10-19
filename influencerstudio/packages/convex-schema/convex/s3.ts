@@ -1,5 +1,5 @@
-import { internalMutation } from 'convex/server';
-import { mutation } from 'convex/server';
+"use node";
+import { action } from './_compat';
 import { v } from 'convex/values';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -19,7 +19,7 @@ async function signGetUrl(key: string) {
   return await getSignedUrl(s3Client, command, { expiresIn: 300 });
 }
 
-export const getPresignedUploadUrl = mutation({
+export const getPresignedUploadUrl = action({
   args: {
     key: v.string(),
     contentType: v.string()
@@ -33,7 +33,7 @@ export const getPresignedUploadUrl = mutation({
   }
 });
 
-export const getPresignedDownloadUrl = mutation({
+export const getPresignedDownloadUrl = action({
   args: {
     key: v.string()
   },
@@ -45,10 +45,4 @@ export const getPresignedDownloadUrl = mutation({
   }
 });
 
-export const deleteObject = internalMutation({
-  args: { key: v.string() },
-  handler: async (_ctx, args) => {
-    void args;
-    // TODO: Add delete logic when cleanup tasks are required.
-  }
-});
+// Deletion is defined in s3_internal.ts as an internal mutation

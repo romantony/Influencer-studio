@@ -1,4 +1,4 @@
-import { mutation, internalMutation } from 'convex/server';
+import { mutation, internalMutation } from './_compat';
 import { v } from 'convex/values';
 import { requireUserWithRole } from './auth';
 import { instagramPublish } from './instagram';

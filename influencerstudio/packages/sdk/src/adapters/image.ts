@@ -11,7 +11,12 @@ export interface ImageAdapter {
 
 class MockImageAdapter implements ImageAdapter {
   async renderAvatar(config: ImageRenderConfig) {
-    const hash = Buffer.from(`${config.prompt}-${config.style}`).toString('base64url').slice(0, 12);
+    const text = `${config.prompt}-${config.style}`;
+    let h = 0;
+    for (let i = 0; i < text.length; i++) {
+      h = (h * 31 + text.charCodeAt(i)) >>> 0;
+    }
+    const hash = h.toString(36).slice(0, 12);
     return {
       s3Key: `s3://mock-bucket/avatars/${hash}.png`,
       width: 1024,
