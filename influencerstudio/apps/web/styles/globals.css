@@ -3,19 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Light theme */
-  --background: 210 20% 99%;
-  --foreground: 224 14% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 224 14% 11%;
-  --muted: 220 16% 96%;
-  --muted-foreground: 220 10% 46%;
-  --border: 220 14% 90%;
-  --input: 220 14% 90%;
-}
-
-.dark {
-  /* StoryStudio-inspired night theme */
+  /* Default to StoryStudio-inspired dark theme */
   --background: 221 39% 9%;   /* deep navy */
   --foreground: 210 40% 98%;
   --card: 221 33% 12%;        /* slate/navy card */
@@ -24,6 +12,18 @@
   --muted-foreground: 220 12% 70%;
   --border: 220 22% 20%;
   --input: 220 22% 20%;
+}
+
+.light {
+  /* Optional light theme */
+  --background: 210 20% 99%;
+  --foreground: 224 14% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 14% 11%;
+  --muted: 220 16% 96%;
+  --muted-foreground: 220 10% 46%;
+  --border: 220 14% 90%;
+  --input: 220 14% 90%;
 }
 
 body {
