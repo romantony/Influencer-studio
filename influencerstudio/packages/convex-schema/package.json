@@ -1,0 +1,13 @@
+{
+  "name": "@influencerstudio/convex-schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "convex": "^1.13.0",
+    "zod": "^3.22.4",
+    "@influencerstudio/sdk": "workspace:*",
+    "@aws-sdk/client-s3": "^3.470.0",
+    "@aws-sdk/s3-request-presigner": "^3.470.0"
+  }
+}

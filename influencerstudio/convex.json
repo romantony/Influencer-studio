@@ -1,0 +1,10 @@
+{
+  "projectSlug": "influencerstudio",
+  "teamSlug": "studiosuite",
+  "projectConfig": {
+    "prodDeployment": null
+  },
+  "functions": "packages/convex-schema/convex",
+  "modules": [],
+  "deployment": "dev:beloved-pelican-210"
+}
