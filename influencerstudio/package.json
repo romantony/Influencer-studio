@@ -1,0 +1,25 @@
+{
+  "name": "influencerstudio",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@8.15.5",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "e2e": "turbo run e2e",
+    "seed": "pnpm --filter scripts seed"
+  },
+  "devDependencies": {
+    "turbo": "^1.12.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "next": "14.1.0",
+      "react": "18.2.0",
+      "react-dom": "18.2.0"
+    }
+  }
+}

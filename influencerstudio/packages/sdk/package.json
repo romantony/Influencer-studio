@@ -1,0 +1,12 @@
+{
+  "name": "@influencerstudio/sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "zod": "^3.22.4",
+    "node-fetch": "^3.3.2"
+  }
+}
