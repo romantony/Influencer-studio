@@ -1,0 +1,14 @@
+{
+  "name": "@influencerstudio/scripts",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "dev": "./dev.sh",
+    "seed": "node ./seed.mjs"
+  },
+  "scripts": {
+    "dev": "./dev.sh",
+    "seed": "node ./seed.mjs",
+    "generate-openapi": "node ./generate-openapi.mjs"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "InfluencerStudio API",
+    "version": "0.1.0",
+    "description": "Typed HTTP API for InfluencerStudio generated via Next.js route handlers"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/api/influencers": {
+      "get": {
+        "operationId": "listInfluencers",
+        "summary": "List influencer personas for the authenticated user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Influencer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createInfluencer",
+        "summary": "Create a new influencer persona",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InfluencerInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Influencer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posts/generate": {
+      "post": {
+        "operationId": "generatePost",
+        "summary": "Generate caption and hashtags for a post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostGenerationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostGenerationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Influencer": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "personaName": { "type": "string" },
+          "tone": { "type": "string" },
+          "pillars": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "bio": { "type": "string" }
+        },
+        "required": ["id", "personaName", "tone", "pillars", "bio"]
+      },
+      "InfluencerInput": {
+        "type": "object",
+        "properties": {
+          "personaName": { "type": "string" },
+          "tone": { "type": "string" },
+          "pillars": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "bio": { "type": "string" }
+        },
+        "required": ["personaName", "tone", "pillars", "bio"]
+      },
+      "PostGenerationInput": {
+        "type": "object",
+        "properties": {
+          "influencerId": { "type": "string" },
+          "assetId": { "type": "string" },
+          "tone": { "type": "string" },
+          "callToAction": { "type": "string" }
+        },
+        "required": ["influencerId", "assetId"]
+      },
+      "PostGenerationResult": {
+        "type": "object",
+        "properties": {
+          "caption": { "type": "string" },
+          "hashtags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "callToAction": { "type": "string" }
+        },
+        "required": ["caption", "hashtags"]
+      }
+    }
+  }
+}
