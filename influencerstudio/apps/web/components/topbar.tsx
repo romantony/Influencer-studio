@@ -6,14 +6,15 @@ import { Input, Button } from '@influencerstudio/ui';
 import { Command, Search, Bell, Sun, Moon } from 'lucide-react';
 
 export function Topbar() {
+  const storageKey = 'studio-theme';
   const [theme, setTheme] = useState<'light' | 'dark'>(() =>
-    (typeof window !== 'undefined' && (localStorage.getItem('theme') as 'light' | 'dark')) || 'dark'
+    (typeof window !== 'undefined' && (localStorage.getItem(storageKey) as 'light' | 'dark')) || 'dark'
   );
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.classList.toggle('dark', theme === 'dark');
-      localStorage.setItem('theme', theme);
+      localStorage.setItem(storageKey, theme);
     }
   }, [theme]);
 
