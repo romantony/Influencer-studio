@@ -1,3 +1,4 @@
+"use client";
 import { CaptionEditor } from '@/components/caption-editor';
 import { PostCard } from '@/components/post-card';
 import { SafetyBadge } from '@/components/safety-badge';

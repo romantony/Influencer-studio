@@ -1,3 +1,4 @@
+"use client";
 import { AvatarCard } from '@/components/avatar-card';
 import { MediaUploader } from '@/components/media-uploader';
 import { Button } from '@influencerstudio/ui';

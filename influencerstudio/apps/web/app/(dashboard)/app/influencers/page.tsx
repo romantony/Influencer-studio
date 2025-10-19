@@ -1,3 +1,4 @@
+"use client";
 import { Button, Card, CardContent, CardHeader, CardTitle, Input } from '@influencerstudio/ui';
 import { CaptionEditor } from '@/components/caption-editor';
 
