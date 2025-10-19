@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@influencerstudio/ui';
 import { BarChart3, CalendarDays, Camera, Library, Settings, UserCircle, Sparkles } from 'lucide-react';
+import { Topbar } from '@/components/topbar';
 
 const navItems = [
   { href: '/app/avatars', label: 'Avatar Creator', icon: Camera },
@@ -50,7 +51,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <Link href="/api/auth/signout">Sign out</Link>
         </Button>
       </aside>
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 sm:p-8">
+        <Topbar />
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">{children}</div>
       </main>
     </div>
