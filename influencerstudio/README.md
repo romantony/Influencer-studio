@@ -15,6 +15,7 @@ InfluencerStudio is the AI-first Instagram creator workspace in the **StudioSuit
   - [StoryStudio SDK](#storystudio-sdk)
   - [Model adapters](#model-adapters)
   - [Instagram callbacks](#instagram-callbacks)
+  - [Firebase Authentication](#firebase-authentication)
 - [Storage conventions](#storage-conventions)
 - [Testing & CI](#testing--ci)
 - [Deployment](#deployment)
@@ -141,7 +142,8 @@ Convex functions in `convex/s3.ts` expose helpers for generating upload/download
 - `infra/docker/web.Dockerfile` builds a production image for the Next.js app.
 - `infra/docker/convextasks.Dockerfile` prepares Convex tasks or cron workers.
 - Terraform samples under `infra/iac` bootstrap AWS S3 with CORS, bucket policy, and an optional CloudFront distribution.
-- Host the Next.js build on Vercel, AWS Amplify, or container platforms. Point the app at your Convex deployment with the `STORYSTUDIO_CONVEX_URL` env var.
+- Deploy the web app on **Vercel** for the smoothest CI/CD pipeline. Configure project environment variables with the Firebase web config, `NEXT_PUBLIC_CONVEX_URL`, and StoryStudio endpoints.
+- Provision a **dedicated Convex instance** for InfluencerStudio instead of sharing the StoryStudio deployment to avoid cross-app coupling. Update `NEXT_PUBLIC_CONVEX_URL` (web) and `CONVEX_DEPLOYMENT` (server) accordingly.
 
 ## Extending the platform
 
