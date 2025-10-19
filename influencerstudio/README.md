@@ -26,7 +26,7 @@ InfluencerStudio is the AI-first Instagram creator workspace in the **StudioSuit
 
 ## Architecture
 
-- **Web**: Next.js 14 App Router app under `apps/web` using Tailwind, shadcn/ui primitives, React Query, and Firebase Authentication.
+- **Web**: Next.js 14 App Router app under `apps/web` using Tailwind, shadcn/ui primitives, React Query, and NextAuth.
 - **Convex schema & functions**: Lives in `packages/convex-schema`, exposing tables, queries, mutations, and guardrails.
 - **Shared SDKs**: `packages/sdk` contains adapters for LLM, image, TTS, and video pipelines with mock implementations plus the StoryStudio REST client.
 - **Shared UI kit**: `packages/ui` exposes typed React components reused across the app.
@@ -76,9 +76,7 @@ Key variables:
 - `STORYSTUDIO_CONVEX_URL` — base URL to the shared Convex deployment
 - `STORYSTUDIO_API_BASE_URL` / `STORYSTUDIO_API_KEY` — REST integration endpoints
 - `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `S3_BUCKET` — unified media storage bucket
-- `CONVEX_DEPLOYMENT` — Convex deployment identifier used by the CLI (defaults to `dev:beloved-pelican-210`)
-- `NEXT_PUBLIC_CONVEX_URL` — Browser client base URL (`https://beloved-pelican-210.convex.cloud` by default)
-- `NEXT_PUBLIC_FIREBASE_*` — Firebase web configuration for sign-in and Convex auth tokens
+- `NEXTAUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — authentication
 - `USE_MOCK_ADAPTERS=true` keeps all AI services offline-friendly. Set to `false` after wiring real adapters.
 
 ### Install & run
@@ -88,7 +86,7 @@ pnpm install
 pnpm dev
 ```
 
-This runs the Next.js web app. To attach the shared Convex dev deployment, run `pnpm convex:dev` in another terminal. The helper script proxies to the Convex CLI with the configured `CONVEX_DEPLOYMENT`, so you can override the deployment by exporting a different value before running the command.
+This runs the Next.js web app. To attach a Convex dev instance, run `pnpm convex dev` from `packages/convex-schema` in another terminal.
 
 ### Seeding demo data
 
@@ -118,14 +116,6 @@ The `packages/sdk/src/adapters` directory defines adapter interfaces for caption
 
 `apps/web/app/api/callbacks/instagram/*` provide typed HTTP handlers that log publish and comment payloads. Replace the logging with Convex mutations or downstream processing when connecting to the real Instagram Business API.
 
-### Firebase Authentication
-
-InfluencerStudio authenticates creators with Firebase using the Story Factory project configuration provided above. The Firebase Web SDK runs entirely on the client while Convex trusts Firebase ID tokens via `convex.setAuth`. When running locally or on Vercel:
-
-- Keep the default keys from `.env.sample` or supply your own Firebase project via the `NEXT_PUBLIC_FIREBASE_*` variables.
-- Ensure the same credentials are configured in Vercel environment settings and any background Convex deployment.
-- Extend `apps/web/components/providers.tsx` if you need additional auth providers (e.g., Apple, Facebook) by wiring the corresponding Firebase sign-in method and syncing extra metadata through the `auth:ensureUser` mutation.
-
 ## Storage conventions
 
 Unified bucket layout:
@@ -153,8 +143,7 @@ Convex functions in `convex/s3.ts` expose helpers for generating upload/download
 - `infra/docker/convextasks.Dockerfile` prepares Convex tasks or cron workers.
 - Terraform samples under `infra/iac` bootstrap AWS S3 with CORS, bucket policy, and an optional CloudFront distribution.
 - Deploy the web app on **Vercel** for the smoothest CI/CD pipeline. Configure project environment variables with the Firebase web config, `NEXT_PUBLIC_CONVEX_URL`, and StoryStudio endpoints.
-- Provision a **dedicated Convex instance** for InfluencerStudio instead of sharing the StoryStudio deployment to avoid cross-app coupling. The repository is already wired to `dev:beloved-pelican-210` (`https://beloved-pelican-210.convex.cloud`). Update `NEXT_PUBLIC_CONVEX_URL` (web) and `CONVEX_DEPLOYMENT` (CLI) if you promote to another environment.
-- Deploy new schema changes with `pnpm convex:deploy`, which forwards any additional flags (for example `--prod`) directly to the Convex CLI.
+- Provision a **dedicated Convex instance** for InfluencerStudio instead of sharing the StoryStudio deployment to avoid cross-app coupling. Update `NEXT_PUBLIC_CONVEX_URL` (web) and `CONVEX_DEPLOYMENT` (server) accordingly.
 
 ## Extending the platform
 

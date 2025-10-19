@@ -10,9 +10,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "e2e": "turbo run e2e",
-    "seed": "pnpm --filter scripts seed",
-    "convex:dev": "node ./scripts/convex.mjs dev",
-    "convex:deploy": "node ./scripts/convex.mjs deploy"
+    "seed": "pnpm --filter scripts seed"
   },
   "devDependencies": {
     "turbo": "^1.12.5"

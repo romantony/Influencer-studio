@@ -9,14 +9,9 @@ async function getUserFromIdentity(ctx: RoleCtx) {
   const identity = await ctx.auth.getUserIdentity();
   if (!identity) return null;
 
-  const email = identity.email ?? identity.tokenIdentifier;
-  if (!email) {
-    return null;
-  }
-
   return await ctx.db
     .query('users')
-    .withIndex('email', (q) => q.eq('email', email))
+    .withIndex('email', (q) => q.eq('email', identity.tokenIdentifier))
     .unique();
 }
 
@@ -42,10 +37,7 @@ export const getCurrentUser = query({
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) return null;
 
-    const email = identity.email ?? identity.tokenIdentifier;
-    if (!email) return null;
-
-    return await ctx.db.query('users').withIndex('email', (q) => q.eq('email', email)).unique();
+    return await ctx.db.query('users').withIndex('email', (q) => q.eq('email', identity.tokenIdentifier)).unique();
   }
 });
 

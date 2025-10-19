@@ -1,23 +1,10 @@
-'use client';
-
-import { ReactNode, useEffect, useState } from 'react';
+'use client'
+import { ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@influencerstudio/ui';
-import {
-  BarChart3,
-  CalendarDays,
-  Camera,
-  Library,
-  Settings,
-  UserCircle,
-  Sparkles,
-  Loader2
-} from 'lucide-react';
-import { signOut as firebaseSignOut } from 'firebase/auth';
-import { getFirebaseAuth } from '@/lib/firebase-client';
-import { useAuth } from '@/components/providers';
+import { BarChart3, CalendarDays, Camera, Library, Settings, UserCircle, Sparkles } from 'lucide-react';
 
 const navItems = [
   { href: '/app/avatars', label: 'Avatar Creator', icon: Camera },
@@ -47,40 +34,6 @@ function NavLink({ href, label, icon: Icon }: (typeof navItems)[number]) {
 }
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const router = useRouter();
-  const { user, loading } = useAuth();
-  const [signingOut, setSigningOut] = useState(false);
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.replace('/signin');
-    }
-  }, [loading, user, router]);
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
-  const displayName = user.displayName ?? user.email ?? 'Creator';
-
-  const handleSignOut = async () => {
-    try {
-      setSigningOut(true);
-      await firebaseSignOut(getFirebaseAuth());
-      router.replace('/signin');
-    } finally {
-      setSigningOut(false);
-    }
-  };
-
   return (
     <div className="flex min-h-screen w-full bg-muted/30">
       <aside className="flex w-64 flex-col border-r border-border bg-background/80 p-6">
@@ -88,15 +41,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <Sparkles className="h-5 w-5 text-primary-500" />
           InfluencerStudio
         </Link>
-        <div className="mt-6 text-xs uppercase tracking-wide text-muted-foreground">{displayName}</div>
-        <nav className="mt-6 flex flex-1 flex-col gap-2">
+        <nav className="mt-8 flex flex-1 flex-col gap-2">
           {navItems.map((item) => (
             <NavLink key={item.href} {...item} />
           ))}
         </nav>
-        <Button variant="outline" className="mt-auto" onClick={handleSignOut} disabled={signingOut}>
-          {signingOut ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-          Sign out
+        <Button variant="outline" className="mt-auto" asChild>
+          <Link href="/api/auth/signout">Sign out</Link>
         </Button>
       </aside>
       <main className="flex-1 p-8">
