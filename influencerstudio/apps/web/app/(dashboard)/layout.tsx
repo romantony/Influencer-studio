@@ -59,14 +59,14 @@
 //   );
 // }
 'use client'
-import { ReactNode } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-//-import { Button } from '@/components/ui';
-import { Button, Avatar, Card, Separator, Tooltip } from '@/components/ui';
-import { BarChart3, CalendarDays, Camera, Library, Settings, UserCircle, Sparkles } from 'lucide-react';
-import { Topbar } from '@/components/topbar';
+
+import { ReactNode } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
+import { Button, Avatar, Card, Separator, Tooltip } from '@/components/ui'
+import { BarChart3, CalendarDays, Camera, Library, Settings, UserCircle, Sparkles } from 'lucide-react'
+import { Topbar } from '@/components/topbar'
 
 const navItems = [
   { href: '/app/avatars', label: 'Avatar Creator', icon: Camera },
@@ -76,11 +76,11 @@ const navItems = [
   { href: '/app/library', label: 'Library', icon: Library },
   { href: '/app/analytics', label: 'Analytics', icon: BarChart3 },
   { href: '/app/settings', label: 'Settings', icon: Settings }
-];
+]
 
 function NavLink({ href, label, icon: Icon }: (typeof navItems)[number]) {
-  const pathname = usePathname();
-  const active = pathname.startsWith(href);
+  const pathname = usePathname()
+  const active = pathname?.startsWith(href)
   return (
     <Link
       href={href}
@@ -92,7 +92,7 @@ function NavLink({ href, label, icon: Icon }: (typeof navItems)[number]) {
       <Icon className="h-4 w-4" />
       {label}
     </Link>
-  );
+  )
 }
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -109,10 +109,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-//-        <Button variant="outline" className="mt-auto" asChild>
-//-          <Link href="/api/auth/signout">Sign out</Link>
-//-        </Button>
         <Separator />
+
         <div className="mt-auto flex items-center gap-3">
           <Avatar src="/avatar-placeholder.png" alt="User" fallback="RS" />
           <div className="flex-1">
@@ -128,8 +126,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       </aside>
       <main className="flex-1 p-4 sm:p-8">
         <Topbar />
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">{children}</div>
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+          {children}
+        </div>
       </main>
     </div>
-  );
+  )
 }
