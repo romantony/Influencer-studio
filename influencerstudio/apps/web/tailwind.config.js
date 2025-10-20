@@ -18,9 +18,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "oklch(var(--border))",
+        input: "oklch(var(--input))",
+        ring: "oklch(var(--ring))",
+        background: "oklch(var(--background))",
+        foreground: "oklch(var(--foreground))",
         primary: {
           50: "hsl(var(--primary-50))",
           100: "hsl(var(--primary-100))",
@@ -32,17 +34,34 @@ module.exports = {
           700: "hsl(var(--primary-700))",
           800: "hsl(var(--primary-800))",
           900: "hsl(var(--primary-900))",
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "oklch(var(--primary))",
+          foreground: "oklch(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "oklch(var(--secondary))",
+          foreground: "oklch(var(--secondary-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "oklch(var(--muted))",
+          foreground: "oklch(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "oklch(var(--accent))",
+          foreground: "oklch(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "oklch(var(--destructive))",
+          foreground: "oklch(var(--background))",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "oklch(var(--card))",
+          foreground: "oklch(var(--card-foreground))",
         },
+      },
+      borderRadius: {
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: `calc(var(--radius) - 4px)`,
       },
     },
   },

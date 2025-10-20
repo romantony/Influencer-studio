@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import Providers from '@/components/providers';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,16 +15,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen bg-background text-foreground`}>
-        <script
-          // Ensure dark theme applies before hydration and ignores any old 'theme' key
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{var k='studio-theme';var t=localStorage.getItem(k)||'dark';document.documentElement.classList.toggle('dark',t==='dark');}catch(e){}"
-          }}
-        />
-        <Providers>{children}</Providers>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

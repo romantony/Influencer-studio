@@ -67,6 +67,8 @@ import { cn } from '@/lib/utils'
 import { Button, Avatar, Card, Separator, Tooltip } from '@/components/ui'
 import { BarChart3, CalendarDays, Camera, Library, Settings, UserCircle, Sparkles } from 'lucide-react'
 import { Topbar } from '@/components/topbar'
+import { auth } from '@/lib/firebase'
+import { signOut } from 'firebase/auth'
 
 const navItems = [
   { href: '/app/avatars', label: 'Avatar Creator', icon: Camera },
@@ -118,8 +120,18 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <div className="text-xs text-muted-foreground">Workspace</div>
           </div>
           <Tooltip content="Sign out">
-            <Button variant="outline" asChild>
-              <Link href="/api/auth/signout">Sign out</Link>
+            <Button
+              variant="outline"
+              onClick={async () => {
+                try {
+                  await signOut(auth)
+                } finally {
+                  // Redirect to sign in regardless
+                  if (typeof window !== 'undefined') window.location.href = '/signin'
+                }
+              }}
+            >
+              Sign out
             </Button>
           </Tooltip>
         </div>

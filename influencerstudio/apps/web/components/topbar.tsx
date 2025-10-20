@@ -1,22 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Input, Button } from '@/components/ui';
 import { Command, Search, Bell, Sun, Moon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 export function Topbar() {
-  const storageKey = 'studio-theme';
-  const [theme, setTheme] = useState<'light' | 'dark'>(() =>
-    (typeof window !== 'undefined' && (localStorage.getItem(storageKey) as 'light' | 'dark')) || 'dark'
-  );
-
+  const { theme, setTheme, resolvedTheme } = useTheme();
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.classList.toggle('dark', theme === 'dark');
-      localStorage.setItem(storageKey, theme);
-    }
-  }, [theme]);
+    // Ensure default is dark on first mount if system preference is unknown
+    if (!theme) setTheme('dark');
+    // no-op otherwise; next-themes manages the class
+  }, [theme, setTheme]);
 
   return (
     <div className="sticky top-0 z-10 mb-6 flex items-center gap-3 border-b bg-background/80 px-2 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -37,10 +33,10 @@ export function Topbar() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+          onClick={() => setTheme((resolvedTheme === 'dark' ? 'light' : 'dark'))}
           aria-label="Toggle theme"
         >
-          {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          {resolvedTheme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
       </div>
     </div>
