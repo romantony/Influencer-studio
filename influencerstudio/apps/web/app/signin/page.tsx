@@ -11,7 +11,7 @@ import {
   CardContent,
 } from '@/components/ui'
 import { auth } from '@/lib/firebase'
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+// Avoid static import of firebase/auth to prevent bundling Node build on server
 import Link from 'next/link'
 import { useToast } from '@/components/toaster'
 
@@ -37,6 +37,7 @@ export default function SignInPage() {
     const password = String(formData.get('password') || '')
     try {
       setLoading(true)
+      const { signInWithEmailAndPassword } = await import('firebase/auth')
       await signInWithEmailAndPassword(auth, email, password)
       router.push('/app')
     } catch (err: any) {
@@ -49,6 +50,7 @@ export default function SignInPage() {
   async function onGoogle() {
     try {
       setLoading(true)
+      const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
       router.push('/app')

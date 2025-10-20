@@ -12,7 +12,7 @@ import {
   CardContent,
 } from '@/components/ui'
 import { auth } from '@/lib/firebase'
-import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+// Avoid static import of firebase/auth to prevent bundling Node build on server
 import { useToast } from '@/components/toaster'
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -38,6 +38,7 @@ export default function SignUpPage() {
     const password = String(formData.get('password') || '')
     try {
       setLoading(true)
+      const { createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth')
       const cred = await createUserWithEmailAndPassword(auth, email, password)
       if (name) await updateProfile(cred.user, { displayName: name })
       push({ title: 'Welcome!', description: 'Your account was created.', variant: 'success' })
@@ -52,6 +53,7 @@ export default function SignUpPage() {
   async function onGoogle() {
     try {
       setLoading(true)
+      const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
       router.push('/app')
