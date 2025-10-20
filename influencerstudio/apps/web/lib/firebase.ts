@@ -1,7 +1,6 @@
 // Client-side Firebase initialization for web app
 // Uses provided public config.
 import { initializeApp, getApps, getApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA5ElwaagfUosEkEt5loWaStcEGmHnKTLE',
@@ -15,5 +14,7 @@ const firebaseConfig = {
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig)
 
-export const auth = getAuth(app)
-
+export async function getAuthClient() {
+  const { getAuth } = await import('firebase/auth')
+  return getAuth(app)
+}

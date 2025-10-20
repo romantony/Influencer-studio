@@ -11,7 +11,7 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui'
-import { auth } from '@/lib/firebase'
+import { getAuthClient } from '@/lib/firebase'
 // Avoid static import of firebase/auth to prevent bundling Node build on server
 import { useToast } from '@/components/toaster'
 
@@ -39,6 +39,7 @@ export default function SignUpPage() {
     try {
       setLoading(true)
       const { createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth')
+      const auth = await getAuthClient()
       const cred = await createUserWithEmailAndPassword(auth, email, password)
       if (name) await updateProfile(cred.user, { displayName: name })
       push({ title: 'Welcome!', description: 'Your account was created.', variant: 'success' })
@@ -54,6 +55,7 @@ export default function SignUpPage() {
     try {
       setLoading(true)
       const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
+      const auth = await getAuthClient()
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
       router.push('/app')
