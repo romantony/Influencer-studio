@@ -18,6 +18,7 @@ export { Toast } from '../../../../packages/ui/src/toast'
 export type { ToastProps } from '../../../../packages/ui/src/toast'
 
 // Local-only components that aren't in the shared package
-export { Avatar } from './avatar'
-export { Separator } from './separator'
-export { Tooltip } from './tooltip'
+// Note: paths are case-sensitive in production (Vercel/Linux)
+export { Avatar } from './Avatar'
+export { Separator } from './Separator'
+export { Tooltip } from './Tooltip'
