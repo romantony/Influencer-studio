@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { Button, Input } from '@influencerstudio/ui';
+import { Button, Input } from '@/components/ui';
 import { useToast } from './toaster';
 
 interface MediaUploaderProps {

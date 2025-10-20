@@ -2,7 +2,7 @@
 import { CaptionEditor } from '@/components/caption-editor';
 import { PostCard } from '@/components/post-card';
 import { SafetyBadge } from '@/components/safety-badge';
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@influencerstudio/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 
 const mockPosts = [
   {

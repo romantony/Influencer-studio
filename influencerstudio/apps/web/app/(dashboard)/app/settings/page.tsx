@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle, Input, Button } from '@influencerstudio/ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Button } from '@/components/ui';
 
 export default function SettingsPage() {
   return (

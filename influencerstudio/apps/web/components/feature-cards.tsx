@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@influencerstudio/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { Section } from './section';
 import { ComponentType } from 'react';
 

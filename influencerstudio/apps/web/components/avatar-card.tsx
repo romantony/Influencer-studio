@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from '@influencerstudio/ui';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from '@/components/ui';
 
 interface AvatarCardProps {
   name: string;

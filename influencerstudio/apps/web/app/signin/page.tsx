@@ -1,5 +1,5 @@
 import { signIn } from '@/lib/auth';
-import { Button, Input } from '@influencerstudio/ui';
+import { Button, Input } from '@/components/ui';
 
 export default function SignInPage() {
   return (

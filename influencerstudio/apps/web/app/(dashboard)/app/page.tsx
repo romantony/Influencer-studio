@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { MetricCard } from '@/components/metric-card';
-import { Skeleton } from '@influencerstudio/ui';
+import { Skeleton } from '@/components/ui';
 import { getDashboardSummary } from '@/lib/server-data';
 
 export default async function DashboardHome() {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button, Input } from '@influencerstudio/ui';
+import { Button, Input } from '@/components/ui';
 
 export default function SignUpPage() {
   return (

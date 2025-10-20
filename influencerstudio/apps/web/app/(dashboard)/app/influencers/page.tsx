@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, CardContent, CardHeader, CardTitle, Input } from '@influencerstudio/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle, Input } from '@/components/ui';
 import { CaptionEditor } from '@/components/caption-editor';
 
 const personas = [

@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
-import { Card, CardContent, CardHeader, CardTitle } from '@influencerstudio/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 
 interface SchedulerCalendarProps {
   scheduledDates: string[];

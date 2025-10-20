@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from '@influencerstudio/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 
 const assets = [
   { id: 'asset-1', type: 'photo', url: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80', metadata: { outfit: 1 } },

@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@influencerstudio/ui';
+import { Card, CardContent } from '@/components/ui';
 import { Section } from './section';
 
 const items = [

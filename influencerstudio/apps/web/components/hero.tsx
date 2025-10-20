@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button } from '@influencerstudio/ui';
+import { Button } from '@/components/ui';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Section } from './section';
 

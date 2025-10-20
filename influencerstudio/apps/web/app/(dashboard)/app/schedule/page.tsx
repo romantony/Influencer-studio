@@ -1,5 +1,5 @@
 import { SchedulerCalendar } from '@/components/scheduler-calendar';
-import { Button, Card, CardContent, CardHeader, CardTitle, Input } from '@influencerstudio/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle, Input } from '@/components/ui';
 
 const scheduled = ['2024-01-05T15:00:00Z', '2024-01-07T18:00:00Z'];
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Input, Button } from '@influencerstudio/ui';
+import { Input, Button } from '@/components/ui';
 import { Command, Search, Bell, Sun, Moon } from 'lucide-react';
 
 export function Topbar() {

@@ -1,5 +1,5 @@
 import { MetricCard } from '@/components/metric-card';
-import { Card, CardContent, CardHeader, CardTitle } from '@influencerstudio/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 
 const metrics = [
   { label: 'Reach', value: '42k', trend: '+8% vs last week' },

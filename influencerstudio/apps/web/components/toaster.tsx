@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Toast, ToastProps } from '@influencerstudio/ui';
+import { Toast, ToastProps } from '@/components/ui';
 
 const listeners = new Set<(toast: ToastProps) => void>();
 
