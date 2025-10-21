@@ -41,6 +41,7 @@ export const schema = defineSchema({
     height: v.optional(v.number()),
     poseIndex: v.optional(v.number()),
     replicateId: v.optional(v.string()),
+    metadata: v.optional(v.any()),
     createdAt: v.number()
   }).index('userId', ['userId']),
   influencers: defineTable({

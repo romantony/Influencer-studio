@@ -1,6 +1,7 @@
 "use node";
 import { action, mutation, query } from './_compat';
 import { v } from 'convex/values';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 async function getCurrentUser(ctx: any) {
   const identity = await ctx.auth.getUserIdentity();
@@ -57,23 +58,32 @@ export const generateInfluencerImages = action({
   args: {
     category: v.string(),
     prompt: v.string(),
-    numImages: v.number(),
+    numImages: v.optional(v.number()),
     numPoses: v.number(),
-    referenceImageUrl: v.optional(v.string())
+    referenceImageUrl: v.optional(v.string()),
+    aspectRatio: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const user = await getCurrentUser(ctx);
     const apiToken = process.env.REPLICATE_API_TOKEN;
     if (!apiToken) throw new Error('Missing REPLICATE_API_TOKEN in Convex env');
+    const bucket = process.env.S3_BUCKET ?? 'influencer-studio';
+    const cloudfront = process.env.CLOUDFRONT_DOMAIN; // e.g., d17gwle4op8ewx.cloudfront.net
+    const region = process.env.AWS_REGION ?? 'us-east-1';
+    const s3 = new S3Client({ region });
 
-    const total = Math.max(1, Math.min(8, args.numImages)) * Math.max(1, Math.min(6, args.numPoses));
+    const numImages = Math.max(1, Math.min(4, args.numImages ?? 1));
+    const numPoses = Math.max(1, Math.min(6, args.numPoses));
 
     const input: Record<string, any> = {
       prompt: args.prompt,
-      num_outputs: Math.max(1, Math.min(8, args.numImages)),
+      num_outputs: numImages,
     };
     if (args.referenceImageUrl) {
       input.image = args.referenceImageUrl;
+    }
+    if (args.aspectRatio) {
+      input.aspect_ratio = args.aspectRatio; // Flux supports strings like '9:16', '1:1'
     }
 
     const res = await fetch('https://api.replicate.com/v1/predictions', {
@@ -115,20 +125,37 @@ export const generateInfluencerImages = action({
       throw new Error('No outputs returned by Replicate');
     }
 
-    // Prepare DB inserts
-    const items = outputUrls.map((url, idx) => ({
-      userId: user._id,
-      category: args.category,
-      prompt: args.prompt,
-      imageUrl: url,
-      width: undefined,
-      height: undefined,
-      poseIndex: (idx % Math.max(1, Math.min(6, args.numPoses))) + 1,
-      replicateId
-    }));
+    // Upload each output to S3 and store CloudFront URL if configured
+    const items: any[] = [];
+    let index = 0;
+    const slug = (args.category || 'general')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    for (const url of outputUrls) {
+      index += 1;
+      const resImg = await fetch(url);
+      if (!resImg.ok) throw new Error(`Failed to fetch output image: ${resImg.status}`);
+      const arrayBuf = await resImg.arrayBuffer();
+      const key = `generated/${user._id}/${slug}/${Date.now()}-${index}.jpg`;
+      await s3.send(
+        new PutObjectCommand({ Bucket: bucket, Key: key, Body: Buffer.from(arrayBuf), ContentType: 'image/jpeg' })
+      );
+      const publicUrl = cloudfront ? `https://${cloudfront}/${key}` : url;
+      items.push({
+        userId: user._id,
+        category: args.category,
+        prompt: args.prompt,
+        imageUrl: publicUrl,
+        width: undefined,
+        height: undefined,
+        poseIndex: (index % numPoses) + 1,
+        replicateId,
+        metadata: { aspectRatio: args.aspectRatio ?? '9:16' },
+      });
+    }
 
     await ctx.runMutation('replicate:saveGeneratedAssets', { items });
     return { count: items.length, items };
   }
 });
-

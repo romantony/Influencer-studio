@@ -6,6 +6,7 @@ import { MediaUploader } from '@/components/media-uploader';
 import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { INFLUENCER_CATEGORIES } from '@/components/influencer-categories';
 import { GenerateInfluencerPanel } from '@/components/generate-influencer';
+import { ImageTile } from '@/components/image-tile';
 
 const mockAvatars = [
   {
@@ -19,6 +20,14 @@ const mockAvatars = [
 
 export default function AvatarsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+  const cdnHost = process.env.NEXT_PUBLIC_CDN_HOST;
+  const featuredFashion = cdnHost
+    ? {
+        url: `https://${cdnHost}/fashion/rooftop-paris-01.jpg`,
+        prompt:
+          'A glamorous AI influencer posing on a minimalist rooftop in Paris at golden hour, wearing a sleek modern outfit with flowing fabric, soft cinematic lighting, lens flare, Vogue-style editorial composition, aesthetic depth of field, 50mm lens shot.',
+      }
+    : null;
   return (
     <section className="space-y-6">
       <header className="flex items-center justify-between">
@@ -52,6 +61,20 @@ export default function AvatarsPage() {
       {selectedCategory ? (
         <div className="space-y-4 rounded-xl border p-4">
           <GenerateInfluencerPanel selectedId={selectedCategory} onDone={() => {}} />
+        </div>
+      ) : null}
+
+      {/* Featured Fashion & Lifestyle asset from S3/CloudFront */}
+      {featuredFashion ? (
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold">Fashion & Lifestyle – Featured</h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            <ImageTile
+              src={featuredFashion.url}
+              alt="Fashion & Lifestyle Featured"
+              prompt={featuredFashion.prompt}
+            />
+          </div>
         </div>
       ) : null}
 
