@@ -38,10 +38,16 @@ export function MediaUploader({ onUploaded }: MediaUploaderProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <Input type="file" onChange={(event) => setFile(event.target.files?.[0] ?? null)} />
+      <Input
+        type="file"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          setFile(event.target.files?.[0] ?? null)
+        }
+      />
       <Button onClick={upload} disabled={!file || uploading}>
         {uploading ? 'Uploading…' : 'Upload'}
       </Button>
     </div>
   );
 }
+

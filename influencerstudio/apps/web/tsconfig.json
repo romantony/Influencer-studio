@@ -21,6 +21,7 @@
     "noEmit": true,
     "incremental": true,
     "isolatedModules": true,
+    "types": ["node", "react", "react-dom"],
     "plugins": [
       {
         "name": "next"

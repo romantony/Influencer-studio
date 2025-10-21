@@ -32,6 +32,17 @@ export const schema = defineSchema({
     durationSec: v.optional(v.number()),
     metadata: v.any()
   }).index('avatarId', ['avatarId']),
+  generatedAssets: defineTable({
+    userId: v.id('users'),
+    category: v.string(),
+    prompt: v.string(),
+    imageUrl: v.string(),
+    width: v.optional(v.number()),
+    height: v.optional(v.number()),
+    poseIndex: v.optional(v.number()),
+    replicateId: v.optional(v.string()),
+    createdAt: v.number()
+  }).index('userId', ['userId']),
   influencers: defineTable({
     userId: v.id('users'),
     personaName: v.string(),

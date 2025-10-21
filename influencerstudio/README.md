@@ -54,6 +54,33 @@ InfluencerStudio is the AI-first Instagram creator workspace in the **StudioSuit
 ### Analytics
 - Mocked metrics and recommended posting windows with heuristics that can be replaced by StoryStudio analytics feeds.
 
+## AI Influencer Generation (Flux via Replicate + Convex)
+
+Generate AI influencer images from category‑based prompts using Replicate’s Flux 1‑Dev model via Convex actions. Generated images appear under the Library → “Generated Assets” with their prompts.
+
+- Category presets with cover images and sample prompts
+- Prompt editor with optional reference image (file/camera)
+- Controls for number of images and poses
+- Convex action `replicate:generateInfluencerImages` stores results into `generatedAssets`
+- Library view reads `replicate:listGeneratedAssets`
+
+Setup:
+- Set your Replicate API token in Convex:
+  - `convex env set REPLICATE_API_TOKEN <your-token>`
+- Ensure `NEXT_PUBLIC_CONVEX_URL` is configured in the web app.
+
+Key files:
+- `apps/web/components/influencer-categories.tsx` – categories and sample prompts
+- `apps/web/components/generate-influencer.tsx` – generation UI
+- `apps/web/app/(dashboard)/app/avatars/page.tsx` – category grid + panel
+- `apps/web/app/(dashboard)/app/library/page.tsx` – renders Generated Assets
+- `packages/convex-schema/convex/replicate.ts` – Convex actions and persistence
+- `packages/convex-schema/convex/schema.ts` – `generatedAssets` table
+
+Notes:
+- Replace placeholder cover images with your own.
+- Replicate outputs are stored by URL; you can later ingest to S3.
+
 ## Getting started
 
 ### Prerequisites
