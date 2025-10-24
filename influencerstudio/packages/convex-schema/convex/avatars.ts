@@ -152,7 +152,7 @@ export const generateVideo = mutation({
         width: 1080,
         height: 1920,
         durationSec: clip.durationSec,
-        metadata: { 
+        metadata: {
           script: args.script,
           videoPrompt: args.videoPrompt,
           voiceId: args.voiceId,

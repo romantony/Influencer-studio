@@ -46,15 +46,15 @@ class ElevenLabsTTSAdapter implements TTSAdapter {
 
       // Get audio buffer
       const audioBuffer = await response.arrayBuffer();
-      
+
       // Generate S3 key for the audio file
       const timestamp = Date.now();
       const s3Key = `audio/tts/${voiceId}-${timestamp}.mp3`;
-      
+
       // Upload to S3 using presigned URL or direct upload
       // For now, we'll use a utility function that should be available in the convex environment
       const uploadUrl = await this.getUploadUrl(s3Key, 'audio/mpeg');
-      
+
       // Upload the audio file
       const uploadResponse = await fetch(uploadUrl, {
         method: 'PUT',

@@ -87,7 +87,7 @@ class RunComfyVideoAdapter implements VideoAdapter {
         }
 
         const statusData = await statusResponse.json();
-        
+
         if (statusData.status === 'succeeded' || statusData.status === 'completed') {
           // Get the result
           const resultResponse = await fetch(`${this.baseUrl}/deployments/${this.deploymentId}/requests/${requestId}/result`, {
@@ -99,7 +99,7 @@ class RunComfyVideoAdapter implements VideoAdapter {
           }
 
           const resultData = await resultResponse.json();
-          
+
           // Extract video URL from result
           // The exact structure depends on RunComfy's response format
           videoUrl = resultData.output || resultData.outputs?.[0] || resultData.video_url;
@@ -107,7 +107,7 @@ class RunComfyVideoAdapter implements VideoAdapter {
         } else if (statusData.status === 'failed' || statusData.status === 'error') {
           throw new Error(`RunComfy job failed: ${statusData.error || 'Unknown error'}`);
         }
-        
+
         // Continue polling if status is 'pending', 'processing', etc.
       }
 
@@ -122,11 +122,11 @@ class RunComfyVideoAdapter implements VideoAdapter {
       }
 
       const videoBuffer = await videoResponse.arrayBuffer();
-      
+
       // Generate S3 key for the video
       const timestamp = Date.now();
       const s3Key = `videos/generated/${timestamp}.mp4`;
-      
+
       // Upload to S3
       const uploadUrl = await this.getUploadUrl(s3Key, 'video/mp4');
       const uploadResponse = await fetch(uploadUrl, {
@@ -206,7 +206,7 @@ export function getVideoAdapter(): VideoAdapter {
   // Use RunComfy adapter
   const apiKey = process.env.RUNCOMFY_API_KEY;
   const deploymentId = process.env.RUNCOMFY_DEPLOYMENT_ID || 'bb5bcbdf-d63c-460c-bbaf-31237d987ee6';
-  
+
   if (!apiKey) {
     throw new Error('RUNCOMFY_API_KEY not configured. Set USE_MOCK_ADAPTERS=true for local development.');
   }

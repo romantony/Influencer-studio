@@ -26,10 +26,10 @@ export default function AvatarsPage() {
   const cdnHost = process.env.NEXT_PUBLIC_CDN_HOST;
   const featuredFashion = cdnHost
     ? {
-        url: `https://${cdnHost}/fashion/rooftop-paris-01.jpg`,
-        prompt:
-          'A glamorous AI influencer posing on a minimalist rooftop in Paris at golden hour, wearing a sleek modern outfit with flowing fabric, soft cinematic lighting, lens flare, Vogue-style editorial composition, aesthetic depth of field, 50mm lens shot.',
-      }
+      url: `https://${cdnHost}/fashion/rooftop-paris-01.jpg`,
+      prompt:
+        'A glamorous AI influencer posing on a minimalist rooftop in Paris at golden hour, wearing a sleek modern outfit with flowing fabric, soft cinematic lighting, lens flare, Vogue-style editorial composition, aesthetic depth of field, 50mm lens shot.',
+    }
     : null;
   return (
     <section className="space-y-6">
@@ -39,7 +39,7 @@ export default function AvatarsPage() {
           <p className="text-sm text-muted-foreground">Create AI influencers by category.</p>
         </div>
         <div className="flex gap-2">
-          <Button 
+          <Button
             variant={showVideoGenerator ? 'outline' : 'default'}
             onClick={() => setShowVideoGenerator(!showVideoGenerator)}
           >
@@ -71,7 +71,7 @@ export default function AvatarsPage() {
 
       {selectedCategory ? (
         <div className="space-y-4 rounded-xl border p-4">
-          <GenerateInfluencerPanel selectedId={selectedCategory} onDone={() => {}} />
+          <GenerateInfluencerPanel selectedId={selectedCategory} onDone={() => { }} />
         </div>
       ) : null}
 
@@ -122,9 +122,9 @@ export default function AvatarsPage() {
       <div className="grid gap-6 md:grid-cols-3">
         {mockAvatars.map((avatar) => (
           <div key={avatar.id} onClick={() => setSelectedAvatar(avatar)} className="cursor-pointer">
-            <AvatarCard 
-              name={avatar.name} 
-              style={avatar.style} 
+            <AvatarCard
+              name={avatar.name}
+              style={avatar.style}
               imageUrl={avatar.baseImageUrl}
               onSelect={() => setSelectedAvatar(avatar)}
             />
