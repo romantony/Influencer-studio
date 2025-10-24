@@ -2,6 +2,8 @@ import { mutation, query } from './_compat';
 import { v } from 'convex/values';
 import { z } from 'zod';
 import { getImageAdapter } from '@influencerstudio/sdk/src/adapters/image';
+import { getTTSAdapter } from '@influencerstudio/sdk/src/adapters/tts';
+import { getVideoAdapter } from '@influencerstudio/sdk/src/adapters/video';
 import { requireUserWithRole, assertOwnerOrAdmin } from './auth';
 
 const createFromTextSchema = z.object({
@@ -113,5 +115,59 @@ export const deleteAvatar = mutation({
     }
     await ctx.db.delete(args.avatarId);
     return true;
+  }
+});
+
+/**
+ * Generate a talking avatar video from script
+ * Uses ElevenLabs TTS + RunComfy video generation
+ */
+export const generateVideo = mutation({
+  args: {
+    avatarId: v.id('avatars'),
+    script: v.string(),
+    videoPrompt: v.string(),
+    voiceId: v.string()
+  },
+  handler: async (ctx, args) => {
+    const user = await requireUserWithRole(ctx, 'creator');
+    const avatar = await ctx.db.get(args.avatarId);
+    if (!avatar) throw new Error('Avatar not found');
+    assertOwnerOrAdmin(user, avatar.userId);
+
+    try {
+      // Step 1: Convert script to speech using ElevenLabs
+      const tts = getTTSAdapter();
+      const audioKey = await tts.synthesize(args.script, args.voiceId);
+
+      // Step 2: Generate video using RunComfy
+      const video = getVideoAdapter();
+      const clip = await video.lipSync(audioKey, avatar.baseImageUrl, args.videoPrompt);
+
+      // Step 3: Store the video asset
+      const assetId = await ctx.db.insert('avatarAssets', {
+        avatarId: avatar._id,
+        type: 'video',
+        s3Key: clip.s3Key,
+        width: 1080,
+        height: 1920,
+        durationSec: clip.durationSec,
+        metadata: { 
+          script: args.script,
+          videoPrompt: args.videoPrompt,
+          voiceId: args.voiceId,
+          audioKey
+        }
+      });
+
+      return {
+        assetId: assetId.toString(),
+        s3Key: clip.s3Key,
+        durationSec: clip.durationSec
+      };
+    } catch (error) {
+      console.error('Video generation failed:', error);
+      throw new Error(`Video generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
 });

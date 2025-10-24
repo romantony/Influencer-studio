@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { AvatarCard } from '@/components/avatar-card';
 import { MediaUploader } from '@/components/media-uploader';
+import { VideoGenerator } from '@/components/video-generator';
 import { Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { INFLUENCER_CATEGORIES } from '@/components/influencer-categories';
 import { GenerateInfluencerPanel } from '@/components/generate-influencer';
@@ -20,6 +21,8 @@ const mockAvatars = [
 
 export default function AvatarsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+  const [selectedAvatar, setSelectedAvatar] = useState<typeof mockAvatars[0] | undefined>(undefined);
+  const [showVideoGenerator, setShowVideoGenerator] = useState(false);
   const cdnHost = process.env.NEXT_PUBLIC_CDN_HOST;
   const featuredFashion = cdnHost
     ? {
@@ -34,6 +37,14 @@ export default function AvatarsPage() {
         <div>
           <h1 className="text-3xl font-semibold">Avatars</h1>
           <p className="text-sm text-muted-foreground">Create AI influencers by category.</p>
+        </div>
+        <div className="flex gap-2">
+          <Button 
+            variant={showVideoGenerator ? 'outline' : 'default'}
+            onClick={() => setShowVideoGenerator(!showVideoGenerator)}
+          >
+            {showVideoGenerator ? 'Hide Video Generator' : 'Generate Video'}
+          </Button>
         </div>
       </header>
 
@@ -64,6 +75,28 @@ export default function AvatarsPage() {
         </div>
       ) : null}
 
+      {/* Video Generator */}
+      {showVideoGenerator && selectedAvatar ? (
+        <div className="space-y-4 rounded-xl border border-primary-200 bg-primary-50/30 p-6">
+          <h2 className="text-lg font-semibold">Generate Talking Avatar Video</h2>
+          <VideoGenerator
+            avatarId={selectedAvatar.id}
+            avatarImageUrl={selectedAvatar.baseImageUrl}
+            avatarName={selectedAvatar.name}
+            onVideoGenerated={(url) => {
+              console.log('Video generated:', url);
+              setShowVideoGenerator(false);
+            }}
+          />
+        </div>
+      ) : showVideoGenerator && !selectedAvatar ? (
+        <div className="rounded-xl border border-dashed border-border p-6 text-center">
+          <p className="text-sm text-muted-foreground">
+            Select an avatar below to generate a video
+          </p>
+        </div>
+      ) : null}
+
       {/* Featured Fashion & Lifestyle asset from S3/CloudFront */}
       {featuredFashion ? (
         <div className="space-y-3">
@@ -88,7 +121,19 @@ export default function AvatarsPage() {
 
       <div className="grid gap-6 md:grid-cols-3">
         {mockAvatars.map((avatar) => (
-          <AvatarCard key={avatar.id} name={avatar.name} style={avatar.style} imageUrl={avatar.baseImageUrl} />
+          <div key={avatar.id} onClick={() => setSelectedAvatar(avatar)} className="cursor-pointer">
+            <AvatarCard 
+              name={avatar.name} 
+              style={avatar.style} 
+              imageUrl={avatar.baseImageUrl}
+              onSelect={() => setSelectedAvatar(avatar)}
+            />
+            {selectedAvatar?.id === avatar.id && (
+              <div className="mt-2 rounded-md bg-primary-100 p-2 text-center text-sm font-medium text-primary-700">
+                Selected
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </section>

@@ -27,6 +27,7 @@ export const api = {
   },
   avatars: {
     createFromText: 'avatars:createFromText',
-    list: 'avatars:list'
+    list: 'avatars:list',
+    generateVideo: 'avatars:generateVideo'
   }
 } as const;
